@@ -16,3 +16,40 @@ const map = new mapboxgl.Map({
   minZoom: 5, // Minimum allowed zoom
   maxZoom: 18, // Maximum allowed zoom
 });
+
+map.on('load', async () => {
+  console.log("Map loaded!");
+  map.addSource('boston_route', {
+    type: 'geojson',
+    data: 'https://bostonopendata-boston.opendata.arcgis.com/datasets/boston::existing-bike-network-2022.geojson',
+  });
+
+  map.addLayer({
+    id: 'boston-bike-lanes',
+    type: 'line',
+    source: 'boston_route',
+    paint: {
+      'line-color': 'green',
+      'line-width': 3,
+      'line-opacity': 0.4,
+    },
+  });
+
+  map.addSource('cambridge_route', {
+    type: 'geojson',
+    data: 'https://opendata.cambridgema.gov/api/geospatial/49f776b4-6c49-4b63-bdfa-73fe2df3382f?format=GeoJSON'
+  });
+
+  map.addLayer({
+    id: 'cambridge-bike-lanes',
+    type: 'line',
+    source: 'cambridge_route',
+    paint: {
+      'line-color': '#32D400',
+      'line-width': 3,
+      'line-opacity': 0.5,
+    },
+  });
+
+  console.log("Bike lane layers added");
+});
