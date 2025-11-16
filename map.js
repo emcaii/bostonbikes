@@ -2,15 +2,11 @@ import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 // Import Mapbox as an ESM module
 import mapboxgl from 'https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/+esm';
 
-<<<<<<< HEAD
-import mapboxgl from 'https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/+esm';
-
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZGV2ZWxvcHNnIiwiYSI6ImNsdmxpMnhwaDAwZTkya3FvcjV2NXdyeDcifQ.CZsX2VQBKzIBjvAETaRQuk";
-=======
+
 // Check that Mapbox GL JS is loaded
 console.log('Mapbox GL JS Loaded:', mapboxgl);
->>>>>>> parent of 9011271 (Update map.js)
 
 // Set your Mapbox access token here
 mapboxgl.accessToken = 'pk.eyJ1IjoiZW1jYWkiLCJhIjoiY21pMTU3OGd0MGdkYzJxb2U1cGFkZ2ZjcyJ9.xtCFjF5LQB8-x1lEvwgD9g';
@@ -66,14 +62,10 @@ map.on('load', async () => {
     },
   });
 
-<<<<<<< HEAD
     map.addSource("cambridge_route", {
     type: "geojson",
     data: "https://dsc106.com/labs/lab07/data/cambridge-bike-lanes.geojson"
     });
-=======
-  console.log("Bike lane layers added");
->>>>>>> parent of 9011271 (Update map.js)
 
   const svg = d3.select('#map').select('svg');
 
