@@ -1,3 +1,4 @@
+import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm';
 // Import Mapbox as an ESM module
 import mapboxgl from 'https://cdn.jsdelivr.net/npm/mapbox-gl@2.15.0/+esm';
 
@@ -16,6 +17,12 @@ const map = new mapboxgl.Map({
   minZoom: 5, // Minimum allowed zoom
   maxZoom: 18, // Maximum allowed zoom
 });
+
+function getCoords(station) {
+  const point = new mapboxgl.LngLat(+station.Long, +station.Lat);
+  const { x, y } = map.project(point);
+  return { cx: x, cy: y };
+}
 
 map.on('load', async () => {
   console.log("Map loaded!");
@@ -52,4 +59,48 @@ map.on('load', async () => {
   });
 
   console.log("Bike lane layers added");
+
+  const svg = d3.select('#map').select('svg');
+
+  const INPUT_BLUEBIKES_CSV_URL =
+    'https://dsc106.com/labs/lab07/data/bluebikes-stations.json';
+
+  let stations = [];
+
+  try {
+    const jsonData = await d3.json(INPUT_BLUEBIKES_CSV_URL);
+    console.log("Loaded JSON:", jsonData);
+
+    stations = jsonData.data.stations;
+    console.log("Stations:", stations);
+
+  } catch (err) {
+    console.error("Error loading JSON:", err);
+  }
+
+  // Add station circles to SVG
+  const circles = svg
+    .selectAll('circle')
+    .data(stations)
+    .enter()
+    .append('circle')
+    .attr('r', 5)
+    .attr('fill', 'steelblue')
+    .attr('stroke', 'white')
+    .attr('stroke-width', 1)
+    .attr('opacity', 0.9);
+
+  function updatePositions() {
+    circles
+      .attr('cx', d => getCoords(d).cx)
+      .attr('cy', d => getCoords(d).cy);
+  }
+
+  updatePositions(); // initial draw
+
+  // When map moves, reposition markers
+  map.on('move', updatePositions);
+  map.on('zoom', updatePositions);
+  map.on('resize', updatePositions);
+  map.on('moveend', updatePositions);
 });
