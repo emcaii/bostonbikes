@@ -5,9 +5,16 @@ html, body {
   width: 100%;
 }
 
+body {
+  display: block; /* NOT flex */
+  font-family: system-ui, sans-serif;
+}
+
 #map {
   width: 100%;
-  height: 100vh; /* <— THIS MAKES THE MAP VISIBLE */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow for effect */
-  border-radius: 8px; /* Optional: rounded corners */
+  height: 80vh;    /* good size under the header */
+  max-width: 1200px; /* optional, removes super-wide stretched look */
+  margin: 0 auto;    /* center it nicely */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
